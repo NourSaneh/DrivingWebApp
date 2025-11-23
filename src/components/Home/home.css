@@ -1,8 +1,0 @@
-.background-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: url('./assets/Background-cars.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}

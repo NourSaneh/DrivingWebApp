@@ -1,31 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-.lebanon-flag {
-  display: inline-block;
-  width: 24px;
-  height: 16px;
-  background: linear-gradient(to bottom,
-      #ed1c24 33%,
-      white 33%,
-      white 66%,
-      #ed1c24 66%);
-  position: relative;
-}
 
-.lebanon-flag::before {
-  content: "";
-  position: absolute;
-  top: 25%;
-  left: 25%;
-  width: 50%;
-  height: 50%;
-  background-color: #00a651;
-  clip-path: polygon(50% 0%,
-      100% 35%,
-      85% 100%,
-      15% 100%,
-      0% 35%);
-}
+
 
 body {
   font-family: 'Poppins', sans-serif;
