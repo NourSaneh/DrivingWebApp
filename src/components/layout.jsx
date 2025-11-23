@@ -1,58 +1,75 @@
 import React from "react";
 import LebanonFlag from "../assets/lebanon-flag.png";
-import CarBackground  from "../assets/background-cars.jpg";      
+import CarBackground from "../assets/background-cars.jpg";
 
 export default function Layout({ children }) {
-return (
+  return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100 font-sans relative">
 
-        {/* Background Layer */}
-<div
-  className="absolute inset-0 -z-20 bg-cover bg-center"
-  style={{ backgroundImage: `url(${CarBackground})` }}
-  aria-hidden="true"
-/>
+      {/* Background Layer */}
+      <div
+        className="absolute inset-0 -z-20 bg-cover bg-center"
+        style={{ backgroundImage: `url(${CarBackground})` }}
+        aria-hidden="true"
+      />
 
-        <div className="absolute inset-0 -z-10 bg-black/30"></div>
+      <div className="absolute inset-0 -z-10 bg-black/30"></div>
 
-        <div className="w-full max-w-3xl bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden">
+      <div className="w-full max-w-3xl bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden">
 
-            <header className="bg-gradient-to-r from-[#ED1C24] to-[#c21820] text-white py-6 px-6 text-center">
-                <h1 className="text-4xl md:text-5xl font-bold mb-2">DARESNE</h1>
-                <p className="text-xl md:text-2xl opacity-90">Lebanese Driving Exam Guide</p>
+        {/* HEADER */}
+        <header className="bg-gradient-to-r from-[#ED1C24] to-[#c21820] text-white py-6 px-6 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-2 heading">
+            DARESNE
+          </h1>
 
-                <nav className="mt-4 flex justify-center space-x-4">
-                    <span className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm">Traffic Signs </span>
-                    <span className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm">Traffic Questions </span>
-                    <span className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm">Test Simulator</span>
-                    <span className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm">Car Parts</span>
-                </nav>
-            </header>
+          <p className="text-xl md:text-2xl opacity-90">
+            Lebanese Driving Exam Guide
+          </p>
 
-            <main className="p-5 md:p-6">
-                {children}
-            </main>
+          <nav className="mt-4 flex justify-center space-x-4">
+            <span className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm">
+              Traffic Signs
+            </span>
+            <span className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm">
+              Traffic Questions
+            </span>
+            <span className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm">
+              Test Simulator
+            </span>
+            <span className="bg-white/20 backdrop-blur-sm rounded-full px-4 py-1 text-sm">
+              Car Parts
+            </span>
+          </nav>
+        </header>
 
-            <footer className="bg-gradient-to-br from-gray-800 to-gray-900 text-white py-4 px-6 text-center">
-                <div className="flex justify-between items-center">
-                    
-                    <div>
-                        <h3 className="font-bold text-lg">Credits</h3>
-                        <p className="text-gray-300">Nour Saneh</p>
-                    </div>
+        {/* MAIN */}
+        <main className="p-5 md:p-6">
+          {children}
+        </main>
 
-                    <div className="flex items-center">
-                        <img
-                            src={LebanonFlag}
-                            alt="Lebanon flag"
-                            className="w-6 h-4 object-cover rounded-sm shadow-sm"
-                        />
-                        <span className="ml-2 font-medium">LEBANON</span>
-                    </div>
+        {/* FOOTER */}
+        <footer className="bg-gradient-to-br from-gray-800 to-gray-900 text-white py-4 px-6 text-center">
+          <div className="flex justify-between items-center">
 
-                </div>
-            </footer>
-        </div>
+            <div>
+              <h3 className="font-bold text-lg heading">Credits</h3>
+              <p className="text-gray-300">Nour Saneh</p>
+            </div>
+
+            <div className="flex items-center">
+              <img
+                src={LebanonFlag}
+                alt="Lebanon flag"
+                className="w-6 h-4 object-cover rounded-sm shadow-sm"
+              />
+              <span className="ml-2 font-medium">LEBANON</span>
+            </div>
+
+          </div>
+        </footer>
+
+      </div>
     </div>
-);
+  );
 }

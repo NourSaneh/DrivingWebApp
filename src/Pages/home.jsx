@@ -60,17 +60,22 @@ const Home = ({ onNavigate }) => {
 
     return (
         <Layout>
+
+            {/* PROGRESS BAR */}
             <div className="bg-[#F4E3C9] py-4 px-6 flex items-center rounded-xl mb-6">
-                <div className="w-full bg-white bg-opacity-50 rounded-full h-2.5">
+                <div className="w-full bg-white/50 rounded-full h-2.5">
                     <div
                         className="bg-[#00A651] h-2.5 rounded-full transition-all duration-500"
                         style={{ width: `${progress}%` }}
                     ></div>
                 </div>
-                <span className="ml-4 text-sm font-medium text-gray-700">{progress}%</span>
+                <span className="ml-4 text-sm font-medium text-gray-700 font-[Montserrat]">
+                    {progress}%
+                </span>
             </div>
 
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center justify-center">
+            {/* TITLE */}
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center justify-center heading">
                 <i className="fas fa-road mr-3 text-[#ED1C24]"></i>
                 Traffic Signs & Questions
             </h2>
@@ -87,13 +92,17 @@ const Home = ({ onNavigate }) => {
                             <div className={`${feature.bgColor} p-3 rounded-lg`}>
                                 <i className={`${feature.icon} ${feature.iconColor} text-2xl`}></i>
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-800 ml-4 py-3">{feature.title}</h3>
+                            <h3 className="text-xl font-semibold text-gray-800 ml-4 py-3 heading">
+                                {feature.title}
+                            </h3>
                         </div>
 
-                        <p className="text-gray-600 mb-4">{feature.description}</p>
+                        <p className="text-gray-600 mb-4 font-[Montserrat]">
+                            {feature.description}
+                        </p>
 
                         <button
-                            className={`${feature.buttonColor} text-white px-4 py-2 rounded-lg text-sm font-medium`}
+                            className={`${feature.buttonColor} text-white px-4 py-2 rounded-lg text-sm font-medium font-[Montserrat]`}
                         >
                             {feature.buttonText}
                         </button>
@@ -103,19 +112,20 @@ const Home = ({ onNavigate }) => {
 
             {/* QUICK ACTIONS */}
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-2">
-                <button className="flex-1 bg-[#ED1C24] hover:bg-[#c21820] text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center">
+                <button className="flex-1 bg-[#ED1C24] hover:bg-[#c21820] text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center font-[Montserrat]">
                     <i className="fas fa-bolt mr-2"></i>
                     Quick Test
                 </button>
 
                 <button
                     onClick={() => handleCardClick('Study Guide')}
-                    className="flex-1 bg-white hover:bg-gray-100 text-gray-800 py-3 px-4 rounded-lg font-medium border flex items-center justify-center"
+                    className="flex-1 bg-white hover:bg-gray-100 text-gray-800 py-3 px-4 rounded-lg font-medium border flex items-center justify-center font-[Montserrat]"
                 >
                     <i className="fas fa-book-open mr-2"></i>
                     Study Guide
                 </button>
             </div>
+
         </Layout>
     );
 };
