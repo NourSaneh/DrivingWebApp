@@ -1,13 +1,14 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 const Topic = require("./models/Topic");
 
-// 1️⃣ Connect to MongoDB
+// CONNECT TO MONGODB ATLAS
 mongoose
-  .connect("mongodb://127.0.0.1:27017/drivingdb")
-  .then(() => console.log("Connected to MongoDB…"))
-  .catch((err) => console.error(err));
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("🌍 Connected to MongoDB Atlas"))
+  .catch((err) => console.error("❌ Connection error:", err));
 
-// 2️⃣ Your topics data
+// Topics data
 const topics = [
   {
     id: "1",
@@ -47,16 +48,11 @@ const topics = [
   },
 ];
 
-// 3️⃣ Remove old topics + insert new ones
-(async () => {
-  try {
-    await Topic.deleteMany({});
-    await Topic.insertMany(topics);
-
-    console.log("🌟 Topics added successfully!");
+// Delete old + insert new
+Topic.deleteMany({})
+  .then(() => Topic.insertMany(topics))
+  .then(() => {
+    console.log("🌟 Topics added successfully to Atlas!");
     mongoose.connection.close();
-  } catch (err) {
-    console.error(err);
-    mongoose.connection.close();
-  }
-})();
+  })
+  .catch((err) => console.error(err));
