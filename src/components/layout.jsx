@@ -6,12 +6,12 @@ export default function Layout({ children }) {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100 font-sans relative">
 
-      {/* Background Layer */}
       <div
         className="absolute inset-0 -z-20 bg-cover bg-center"
         style={{ backgroundImage: `url(${bg})` }}
         aria-hidden="true"
       />
+
 
       {/* Dark overlay */}
       <div className="absolute inset-0 -z-10 bg-black/30"></div>
