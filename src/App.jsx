@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import Home from './Pages/home';
 import StudyGuide from './Pages/studyguide';
 import './App.css';
-import { Analytics } from "@vercel/analytics/next"
-
+import { Analytics } from "@vercel/analytics/react"
 function App() {
   const [page, setPage] = useState('home');
 

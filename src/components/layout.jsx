@@ -1,6 +1,6 @@
 import React from "react";
 import LebanonFlag from "../assets/lebanon-flag.png";
-import CarBackground from "../assets/background-cars.jpg";
+import bg from "../../assets/background-cars.jpg";
 
 export default function Layout({ children }) {
   return (
@@ -9,12 +9,14 @@ export default function Layout({ children }) {
       {/* Background Layer */}
       <div
         className="absolute inset-0 -z-20 bg-cover bg-center"
-        style={{ backgroundImage: `url(${CarBackground})` }}
+        style={{ backgroundImage: `url(${bg})` }}
         aria-hidden="true"
       />
 
+      {/* Dark overlay */}
       <div className="absolute inset-0 -z-10 bg-black/30"></div>
 
+      {/* CARD BOX */}
       <div className="w-full max-w-3xl bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden">
 
         {/* HEADER */}
@@ -51,7 +53,7 @@ export default function Layout({ children }) {
         {/* FOOTER */}
         <footer className="bg-gradient-to-br from-gray-800 to-gray-900 text-white py-4 px-6 text-center">
           <div className="flex justify-between items-center">
-
+            
             <div>
               <h3 className="font-bold text-lg heading">Credits</h3>
               <p className="text-gray-300">Nour Saneh</p>
