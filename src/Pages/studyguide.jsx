@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { API_BASE } from "../config";
 
 export default function StudyGuide() {
   const [topics, setTopics] = useState([]);
@@ -10,9 +11,9 @@ export default function StudyGuide() {
   const [showOnlyIncomplete, setShowOnlyIncomplete] = useState(false);
   const [expandedId, setExpandedId] = useState(null);
 
-  // 1️⃣ Load topics
+  // 1️⃣ Load topics (NO localhost)
   useEffect(() => {
-    fetch("http://localhost:5000/api/topics")
+    fetch("/api/topics")
       .then((res) => res.json())
       .then((data) => {
         setTopics(data);
@@ -20,20 +21,20 @@ export default function StudyGuide() {
       });
   }, []);
 
-  // 2️⃣ Load progress
+  // 2️⃣ Load progress (NO localhost)
   useEffect(() => {
-    fetch("http://localhost:5000/api/study")
+    fetch("/api/study")
       .then((res) => res.json())
       .then((data) => {
         setCompleted(data.completedTopics || []);
       });
   }, []);
 
-  // 3️⃣ Save progress
+  // 3️⃣ Save progress (NO localhost)
   async function saveProgress(updated) {
     setCompleted(updated);
 
-    await fetch("http://localhost:5000/api/study/save", {
+    await fetch("/api/study/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ completedTopics: updated }),
@@ -50,14 +51,14 @@ export default function StudyGuide() {
     saveProgress(updated);
   }
 
-  // 4️⃣ Tags
+  // Tags
   const allTags = useMemo(() => {
     const s = new Set();
     topics.forEach((t) => t.tags.forEach((tag) => s.add(tag)));
     return ["All", ...Array.from(s)];
   }, [topics]);
 
-  // 5️⃣ Filter + Search
+  // Filter + Search
   const filtered = useMemo(() => {
     return topics.filter((t) => {
       if (selectedTag !== "All" && !t.tags.includes(selectedTag)) return false;
@@ -164,11 +165,9 @@ export default function StudyGuide() {
               <div className="mt-3 text-gray-700">
                 <p>{t.content}</p>
                 <p className="mt-2 text-sm">
-                  <strong>Tags:</strong> {t.tags.join(", ")}
-                </p>
+                  <strong>Tags:</strong> {t.tags.join(", ")}</p>
                 <p className="text-sm">
-                  <strong>Estimated Time:</strong> {t.estimatedMins} mins
-                </p>
+                  <strong>Estimated Time:</strong> {t.estimatedMins} mins</p>
               </div>
             )}
           </div>

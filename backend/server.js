@@ -1,7 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config(); // ⬅️ VERY IMPORTANT
+require("dotenv").config(); // <-- loads .env on local
+
 const StudyProgress = require("./models/StudyProgress");
 const Topic = require("./models/Topic");
 
@@ -83,6 +84,13 @@ app.post("/api/topics", async (req, res) => {
     console.error(err);
     res.status(500).json({ message: "Error adding topic" });
   }
+});
+
+/* ----------------------------
+   ROOT ROUTE (optional)
+----------------------------- */
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
 });
 
 /* ----------------------------
