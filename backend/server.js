@@ -1,31 +1,48 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config(); // <-- loads .env on local
+require("dotenv").config();
 
 const StudyProgress = require("./models/StudyProgress");
 const Topic = require("./models/Topic");
 
 const app = express();
 
-// Middleware
-app.use(cors());
+/* --------------------------------------------------
+   CORS — REQUIRED for Vercel → Render communication
+-------------------------------------------------- */
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://drivingwebapp.vercel.app" // your frontend on Vercel
+    ],
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+
+/* --------------------------------------------------
+   Middleware
+-------------------------------------------------- */
 app.use(express.json());
 
-// CONNECT TO ATLAS
+/* --------------------------------------------------
+   Connect to MongoDB Atlas
+-------------------------------------------------- */
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ Connected to MongoDB Atlas"))
+  .then(() => console.log("🔥 Connected to MongoDB Atlas"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-/* ----------------------------
-   FIXED ID FOR STUDY GUIDE
------------------------------ */
+/* --------------------------------------------------
+   CONSTANT ID for progress saving
+-------------------------------------------------- */
 const FIXED_ID = "studyguide";
 
-/* ----------------------------
-   LOAD STUDY PROGRESS
------------------------------ */
+/* --------------------------------------------------
+   Load Study Progress
+-------------------------------------------------- */
 app.get("/api/study", async (req, res) => {
   try {
     const record = await StudyProgress.findOne({ userId: FIXED_ID });
@@ -36,9 +53,9 @@ app.get("/api/study", async (req, res) => {
   }
 });
 
-/* ----------------------------
-   SAVE STUDY PROGRESS
------------------------------ */
+/* --------------------------------------------------
+   Save Study Progress
+-------------------------------------------------- */
 app.post("/api/study/save", async (req, res) => {
   const { completedTopics } = req.body;
 
@@ -59,9 +76,9 @@ app.post("/api/study/save", async (req, res) => {
   }
 });
 
-/* ----------------------------
-       TOPICS: GET ALL
------------------------------ */
+/* --------------------------------------------------
+   Get All Topics
+-------------------------------------------------- */
 app.get("/api/topics", async (req, res) => {
   try {
     const topics = await Topic.find();
@@ -72,9 +89,9 @@ app.get("/api/topics", async (req, res) => {
   }
 });
 
-/* ----------------------------
-       TOPICS: ADD NEW TOPIC
------------------------------ */
+/* --------------------------------------------------
+   Add New Topic (optional)
+-------------------------------------------------- */
 app.post("/api/topics", async (req, res) => {
   try {
     const topic = new Topic(req.body);
@@ -86,16 +103,16 @@ app.post("/api/topics", async (req, res) => {
   }
 });
 
-/* ----------------------------
-   ROOT ROUTE (optional)
------------------------------ */
+/* --------------------------------------------------
+   Root route
+-------------------------------------------------- */
 app.get("/", (req, res) => {
   res.send("Backend is running 🚀");
 });
 
-/* ----------------------------
-   SERVER START (Render)
------------------------------ */
+/* --------------------------------------------------
+   Start Server (Render compatible)
+-------------------------------------------------- */
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, "0.0.0.0", () => {
