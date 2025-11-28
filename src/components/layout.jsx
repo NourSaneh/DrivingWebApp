@@ -1,6 +1,6 @@
 import React from "react";
 import LebanonFlag from "../assets/lebanon-flag.png";
-import bg from "../../assets/background-cars.jpg";
+import bg from "../assets/background-cars.jpg";
 
 export default function Layout({ children }) {
   return (
