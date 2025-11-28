@@ -11,30 +11,32 @@ export default function StudyGuide() {
   const [showOnlyIncomplete, setShowOnlyIncomplete] = useState(false);
   const [expandedId, setExpandedId] = useState(null);
 
-  // 1️⃣ Load topics (NO localhost)
+  // 1️⃣ Load topics FROM BACKEND
   useEffect(() => {
-    fetch("/api/topics")
+    fetch(`${API_BASE}/api/topics`)
       .then((res) => res.json())
       .then((data) => {
         setTopics(data);
         setLoading(false);
-      });
+      })
+      .catch(() => setLoading(false));
   }, []);
 
-  // 2️⃣ Load progress (NO localhost)
+  // 2️⃣ Load saved progress FROM BACKEND
   useEffect(() => {
-    fetch("/api/study")
+    fetch(`${API_BASE}/api/study`)
       .then((res) => res.json())
       .then((data) => {
         setCompleted(data.completedTopics || []);
-      });
+      })
+      .catch(() => {});
   }, []);
 
-  // 3️⃣ Save progress (NO localhost)
+  // 3️⃣ Save progress TO BACKEND
   async function saveProgress(updated) {
     setCompleted(updated);
 
-    await fetch("/api/study/save", {
+    await fetch(`${API_BASE}/api/study/save`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ completedTopics: updated }),
@@ -58,13 +60,15 @@ export default function StudyGuide() {
     return ["All", ...Array.from(s)];
   }, [topics]);
 
-  // Filter + Search
+  // Filter Search
   const filtered = useMemo(() => {
     return topics.filter((t) => {
       if (selectedTag !== "All" && !t.tags.includes(selectedTag)) return false;
       if (showOnlyIncomplete && completed.includes(t.id)) return false;
       if (!query) return true;
+
       const q = query.toLowerCase();
+
       return (
         t.title.toLowerCase().includes(q) ||
         t.summary.toLowerCase().includes(q) ||
@@ -165,9 +169,11 @@ export default function StudyGuide() {
               <div className="mt-3 text-gray-700">
                 <p>{t.content}</p>
                 <p className="mt-2 text-sm">
-                  <strong>Tags:</strong> {t.tags.join(", ")}</p>
+                  <strong>Tags:</strong> {t.tags.join(", ")}
+                </p>
                 <p className="text-sm">
-                  <strong>Estimated Time:</strong> {t.estimatedMins} mins</p>
+                  <strong>Estimated Time:</strong> {t.estimatedMins} mins
+                </p>
               </div>
             )}
           </div>
