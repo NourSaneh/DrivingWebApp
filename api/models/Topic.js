@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const TopicSchema = new mongoose.Schema({
   id: String,
@@ -9,4 +9,5 @@ const TopicSchema = new mongoose.Schema({
   estimatedMins: Number,
 });
 
-module.exports = mongoose.model("Topic", TopicSchema);
+export default mongoose.models.Topic ||
+  mongoose.model("Topic", TopicSchema);
