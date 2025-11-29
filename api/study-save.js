@@ -1,25 +1,26 @@
-import { connectDB } from "./_db";
-import StudyProgress from "./models/StudyProgress";
+import { connectDB } from "./_db.js";
 
 const FIXED_ID = "studyguide";
 
 export default async function handler(req, res) {
-  await connectDB();
-
-  if (req.method === "POST") {
-    const { completedTopics } = req.body;
-
-    let record = await StudyProgress.findOne({ userId: FIXED_ID });
-
-    if (!record) {
-      record = new StudyProgress({ userId: FIXED_ID, completedTopics });
-    } else {
-      record.completedTopics = completedTopics;
+  try {
+    if (req.method !== "POST") {
+      return res.status(405).json({ message: "Method not allowed" });
     }
 
-    await record.save();
-    return res.json({ message: "Saved", record });
-  }
+    const db = await connectDB();
 
-  res.status(405).json({ message: "Method not allowed" });
+    const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
+    const { completedTopics } = body;
+
+    await db.collection("studyprogresses").updateOne(
+      { userId: FIXED_ID },
+      { $set: { completedTopics } },
+      { upsert: true }
+    );
+
+    return res.json({ message: "Saved", completedTopics });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 }
