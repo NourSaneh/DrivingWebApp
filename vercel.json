@@ -7,9 +7,5 @@
       "runtime": "nodejs20",
       "memory": 1024
     }
-  },
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1.js" },
-    { "src": "/(.*)", "dest": "/" }
-  ]
+  }
 }
