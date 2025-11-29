@@ -9,16 +9,30 @@ const Topic = require("./models/Topic");
 const app = express();
 
 /* --------------------------------------------------
-   CORS — REQUIRED for Vercel → Render communication
+   CORS — required for Vercel → Render communication
 -------------------------------------------------- */
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://driving-web-app.vercel.app",
+  "https://driving-web-app-git-main-noursanehs-projects.vercel.app",
+  undefined, // ← Important: Render sometimes sends no origin
+  null
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://drivingwebapp.vercel.app" // your frontend on Vercel
-    ],
+    origin: function (origin, callback) {
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.log("🚫 BLOCKED BY CORS:", origin);
+        callback(new Error("CORS blocked"));
+      }
+    },
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
+    credentials: true,
   })
 );
 
@@ -90,7 +104,7 @@ app.get("/api/topics", async (req, res) => {
 });
 
 /* --------------------------------------------------
-   Add New Topic (optional)
+   Add New Topic
 -------------------------------------------------- */
 app.post("/api/topics", async (req, res) => {
   try {
