@@ -1,15 +1,11 @@
-import { connectDB } from "./_db.js";
+import { getDB } from "../_db.js";
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Not allowed" });
-  }
-
-  const db = await connectDB();
   const { completedTopics } = req.body;
 
-  await db.collection("studyprogresses").updateOne(
-    { userId: 1 },
+  const db = await getDB();
+  await db.collection("study").updateOne(
+    { id: 1 },
     { $set: { completedTopics } },
     { upsert: true }
   );

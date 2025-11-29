@@ -1,7 +1,7 @@
-import { connectDB } from "./_db.js";
+import { getDB } from "./_db.js";
 
 export default async function handler(req, res) {
-  const db = await connectDB();
-  const row = await db.collection("studyprogresses").findOne({ userId: 1 });
-  return res.status(200).json(row || { completedTopics: [] });
+  const db = await getDB();
+  const saved = await db.collection("study").findOne({ id: 1 }) || { completedTopics: [] };
+  return res.status(200).json(saved);
 }

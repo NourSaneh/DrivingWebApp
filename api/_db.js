@@ -1,22 +1,11 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
+let client = null;
 
-if (!uri) throw new Error("Missing MONGODB_URI");
-
-let client;
-let clientPromise;
-
-if (!global._mongoClientPromise) {
-  client = new MongoClient(uri, {
-    maxPoolSize: 10,
-  });
-  global._mongoClientPromise = client.connect();
-}
-
-clientPromise = global._mongoClientPromise;
-
-export async function connectDB() {
-  const client = await clientPromise;
+export async function getDB() {
+  if (!client) {
+    client = new MongoClient(process.env.MONGO_URI);
+    await client.connect();
+  }
   return client.db("drivingdb");
 }
