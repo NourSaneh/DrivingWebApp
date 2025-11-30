@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import topicsData from "../data/topics.json";
 import { API_BASE } from "../config";
 
 export default function StudyGuide() {
@@ -12,15 +13,10 @@ export default function StudyGuide() {
   const [expandedId, setExpandedId] = useState(null);
 
   // 1️⃣ Load topics (correct backend route)
-  useEffect(() => {
-    fetch(`${API_BASE}/api/studyguide`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTopics(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+useEffect(() => {
+  setTopics(topicsData);
+  setLoading(false);
+}, []);
 
   // 2️⃣ Load saved progress (OPTIONAL backend route — if implemented later)
   // Commented out for now because your backend does not have /api/studyguide/progress
