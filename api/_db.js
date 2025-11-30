@@ -1,28 +1,21 @@
 import { MongoClient } from "mongodb";
 
-let client = null;
+const uri = (process.env.MONGODB_URI || process.env.MONGO_URI || "").trim();
 
-const uri = process.env.MONGO_URI || process.env.MONGODB_URI;
-const dbName = process.env.MONGO_DB_NAME || "drivingdb";
+if (!uri) {
+  // Keep the throw so failures are obvious
+  throw new Error("❌ Missing MONGODB_URI in Vercel Environment Variables");
+}
 
-export async function getDB() {
-  if (!uri) {
-    throw new Error(
-      "Missing MongoDB connection string. Set `MONGO_URI` or `MONGODB_URI` environment variable."
-    );
-  }
+// Reuse a single client across invocations
+let clientPromise;
+if (!globalThis._mongoClientPromise) {
+  const client = new MongoClient(uri, { maxPoolSize: 10 });
+  globalThis._mongoClientPromise = client.connect();
+}
+clientPromise = globalThis._mongoClientPromise;
 
-  // Reuse a global MongoClient across lambda invocations on Vercel
-  // to avoid exhausting connections.
-  if (globalThis._mongoClient) {
-    client = globalThis._mongoClient;
-  }
-
-  if (!client) {
-    client = new MongoClient(uri);
-    await client.connect();
-    globalThis._mongoClient = client;
-  }
-
-  return client.db(dbName);
+export async function connectDB() {
+  const client = await clientPromise;
+  return client.db("drivingdb");
 }
