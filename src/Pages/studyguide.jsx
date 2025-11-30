@@ -11,9 +11,9 @@ export default function StudyGuide() {
   const [showOnlyIncomplete, setShowOnlyIncomplete] = useState(false);
   const [expandedId, setExpandedId] = useState(null);
 
-  // 1️⃣ Load topics FROM BACKEND
+  // 1️⃣ Load topics (correct backend route)
   useEffect(() => {
-    fetch(`${API_BASE}/api/topics`)
+    fetch(`${API_BASE}/api/studyguide`)
       .then((res) => res.json())
       .then((data) => {
         setTopics(data);
@@ -22,21 +22,24 @@ export default function StudyGuide() {
       .catch(() => setLoading(false));
   }, []);
 
-  // 2️⃣ Load saved progress FROM BACKEND
+  // 2️⃣ Load saved progress (OPTIONAL backend route — if implemented later)
+  // Commented out for now because your backend does not have /api/studyguide/progress
+  /*
   useEffect(() => {
-    fetch(`${API_BASE}/api/study`)
+    fetch(`${API_BASE}/api/studyguide/progress`)
       .then((res) => res.json())
       .then((data) => {
         setCompleted(data.completedTopics || []);
       })
       .catch(() => {});
   }, []);
+  */
 
-  // 3️⃣ Save progress TO BACKEND
+  // 3️⃣ Save progress
   async function saveProgress(updated) {
     setCompleted(updated);
 
-    await fetch(`${API_BASE}/api/study/save`, {
+    await fetch(`${API_BASE}/api/studyguide/save`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ completedTopics: updated }),
@@ -60,7 +63,7 @@ export default function StudyGuide() {
     return ["All", ...Array.from(s)];
   }, [topics]);
 
-  // Filter Search
+  // Filter + Search
   const filtered = useMemo(() => {
     return topics.filter((t) => {
       if (selectedTag !== "All" && !t.tags.includes(selectedTag)) return false;
@@ -155,7 +158,7 @@ export default function StudyGuide() {
               </button>
             </div>
 
-            {/* Details Toggle */}
+            {/* Details */}
             <button
               onClick={() =>
                 setExpandedId(expandedId === t.id ? null : t.id)
