@@ -1,4 +1,4 @@
-import clientPromise from "../mongodb.js";
+import { getClient } from "../mongodb.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -8,8 +8,8 @@ export default async function handler(req, res) {
   try {
     const { topicId, progress } = req.body;
 
-    const client = await clientPromise;
-    const db = client.db("drivingdb");
+    const client = await getClient();
+    const db = client.db(process.env.MONGO_DB_NAME || "drivingdb");
 
     await db.collection("progress").updateOne(
       { topicId },

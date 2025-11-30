@@ -1,9 +1,9 @@
-import clientPromise from "../mongodb.js";
+import { getClient } from "../mongodb.js";
 
 export default async function handler(req, res) {
   try {
-    const client = await clientPromise;
-    const db = client.db("drivingdb");
+    const client = await getClient();
+    const db = client.db(process.env.MONGO_DB_NAME || "drivingdb");
 
     const topics = await db.collection("topics").find().toArray();
 
