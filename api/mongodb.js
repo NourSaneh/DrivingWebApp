@@ -1,16 +1,13 @@
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGO_URI;
-if (!uri) throw new Error("MONGO_URI missing.");
+if (!uri) throw new Error("Missing MONGO_URI environment variable");
 
 let client;
 let clientPromise;
 
 if (!global._mongoClientPromise) {
-  client = new MongoClient(uri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  client = new MongoClient(uri); // modern syntax (no deprecated options)
   global._mongoClientPromise = client.connect();
 }
 
