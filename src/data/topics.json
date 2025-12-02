@@ -1,34 +1,137 @@
 [
   {
     "id": "1",
+    "lessonLabel": "Lesson 1",
     "title": "Traffic Signs & Signals",
     "summary": "Common road signs, meanings, and actions required.",
-    "content": "Study stop signs, yield signs, regulatory signs, warning signs, and traffic signals. Learn colors and shapes to recognize meaning quickly.",
+    "content": "Learn stop signs, yield signs, regulatory signs, warning signs, temporary signs, and traffic signals.",
     "tags": ["Signs", "Basics"],
     "estimatedMins": 20
   },
   {
     "id": "2",
+    "lessonLabel": "Lesson 2",
     "title": "Right-of-Way Rules",
     "summary": "Who yields and when at intersections.",
-    "content": "Understand four-way stops, uncontrolled intersections, turning vehicles vs pedestrians, and emergency vehicle rules.",
+    "content": "Understand priority rules, uncontrolled intersections, roundabouts, and pedestrian priority.",
     "tags": ["Rules", "Intersections"],
     "estimatedMins": 25
   },
   {
     "id": "3",
+    "lessonLabel": "Lesson 3",
     "title": "Safe Following & Stopping",
     "summary": "Keeping safe distances and proper braking techniques.",
-    "content": "Use the 3-second rule, adjust for weather, avoid tailgating, and practice controlled stops.",
+    "content": "Learn stopping distances, safe following time, road friction, and emergency braking.",
     "tags": ["Safety", "Driving"],
     "estimatedMins": 15
   },
   {
     "id": "4",
+    "lessonLabel": "Lesson 4",
     "title": "Lane Management & Merging",
     "summary": "Proper lane usage, signaling, and merging onto highways.",
-    "content": "Check mirrors and blind spots, signal early, match speed for safe merges, and know HOV rules.",
+    "content": "Left/right lane rules, merging strategies, blind spots, and lane discipline.",
     "tags": ["Highway", "Maneuvers"],
     "estimatedMins": 20
+  },
+  {
+    "id": "5",
+    "lessonLabel": "Lesson 5",
+    "title": "Speed Limits & Control",
+    "summary": "Understanding speed regulations and safe adjustments.",
+    "content": "Urban limits, highway limits, zone restrictions, and speed adaptation on curves.",
+    "tags": ["Speed", "Rules"],
+    "estimatedMins": 20
+  },
+  {
+    "id": "6",
+    "lessonLabel": "Lesson 6",
+    "title": "Parking & Stopping Rules",
+    "summary": "Legal and safe stopping/parking behavior.",
+    "content": "No-parking zones, emergency stopping, hill parking, and hazards.",
+    "tags": ["Parking", "Rules"],
+    "estimatedMins": 18
+  },
+  {
+    "id": "7",
+    "lessonLabel": "Lesson 7",
+    "title": "Overtaking & Passing",
+    "summary": "How and when to safely overtake vehicles.",
+    "content": "Passing zones, visibility, speed adjustments, and forbidden overtaking.",
+    "tags": ["Driving", "Maneuvers"],
+    "estimatedMins": 22
+  },
+  {
+    "id": "8",
+    "lessonLabel": "Lesson 8",
+    "title": "Roundabouts & Intersections",
+    "summary": "Rules for entering and leaving roundabouts safely.",
+    "content": "Priority inside the circle, lane choice, signaling, and pedestrian awareness.",
+    "tags": ["Intersections", "Roundabouts"],
+    "estimatedMins": 20
+  },
+  {
+    "id": "9",
+    "lessonLabel": "Lesson 9",
+    "title": "Driving in Bad Weather",
+    "summary": "How to stay safe in rain, fog, wind, and snow.",
+    "content": "Headlight rules, braking distance increases, skid control.",
+    "tags": ["Weather", "Safety"],
+    "estimatedMins": 20
+  },
+  {
+    "id": "10",
+    "lessonLabel": "Lesson 10",
+    "title": "Night Driving",
+    "summary": "Visibility, headlights, and fatigue handling.",
+    "content": "High beam vs low beam, pedestrian risks, lane control.",
+    "tags": ["Night", "Driving"],
+    "estimatedMins": 18
+  },
+  {
+    "id": "11",
+    "lessonLabel": "Lesson 11",
+    "title": "Car Maintenance Basics",
+    "summary": "Essential checks before and after driving.",
+    "content": "Oil level, brakes, tires, coolant, dashboard warning lights.",
+    "tags": ["Maintenance", "Basics"],
+    "estimatedMins": 15
+  },
+  {
+    "id": "12",
+    "lessonLabel": "Lesson 12",
+    "title": "Emergency Situations & Breakdowns",
+    "summary": "How to respond to car failures and accidents.",
+    "content": "Brake failure, tire blowouts, overheating, accident steps.",
+    "tags": ["Emergency", "Safety"],
+    "estimatedMins": 15
+  },
+  {
+    "id": "13",
+    "lessonLabel": "Lesson 13",
+    "title": "Highway & Freeway Driving",
+    "summary": "High-speed, multi-lane driving rules.",
+    "content": "Safe merging, overtaking, lane discipline, speed control.",
+    "tags": ["Highway", "Driving"],
+    "estimatedMins": 20
+  },
+  {
+    "id": "14",
+    "lessonLabel": "Lesson 14",
+    "title": "Driving Etiquette & Behavior",
+    "summary": "Good manners, courtesy, and safety culture.",
+    "content": "Honking rules, giving way, patience, road rage avoidance.",
+    "tags": ["Etiquette", "Behavior"],
+    "estimatedMins": 12
+  },
+  {
+    "id": "15",
+    "lessonLabel": "Lesson 15",
+    "title": "Final Exam Preparation",
+    "summary": "Everything needed before taking the official test.",
+    "content": "Test format, question patterns, tricks, and practice review.",
+    "tags": ["Exam", "Prep"],
+    "estimatedMins": 25
   }
 ]

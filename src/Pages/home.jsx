@@ -2,15 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/layout';
 
 const Home = ({ onNavigate }) => {
-  const [progress, setProgress] = useState(65);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setProgress(75);
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
+const [progress, setProgress] = useState(0);
 
   const handleCardClick = (title) => {
     if (title === "Study Guide") {
@@ -68,7 +60,8 @@ const Home = ({ onNavigate }) => {
   ];
 
   return (
-    <Layout>
+    
+    <Layout onNavigate={onNavigate}>
       {/* PROGRESS BAR */}
       <div className="bg-[#F4E3C9] py-4 px-6 flex items-center rounded-xl mb-6">
         <div className="w-full bg-white/50 rounded-full h-2.5">
@@ -122,7 +115,7 @@ const Home = ({ onNavigate }) => {
       <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-2">
         <button className="flex-1 bg-[#ED1C24] hover:bg-[#c21820] text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center font-[Montserrat]">
           <i className="fas fa-bolt mr-2"></i>
-          Quick Test
+          Full Test
         </button>
 
         <button

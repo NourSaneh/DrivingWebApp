@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import Home from "./Pages/home";
 import StudyGuide from "./Pages/studyguide";
+import Login from "./Pages/login";  // ⬅️ add this
 import "./App.css";
-import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [page, setPage] = useState("home");
-
   const navigate = (to) => setPage(to);
 
   return (
     <div className="App">
+
       {page === "home" && <Home onNavigate={navigate} />}
 
       {page === "studyguide" && (
@@ -31,6 +31,11 @@ function App() {
 
           <StudyGuide onNavigate={navigate} />
         </div>
+      )}
+
+      {/* NEW LOGIN PAGE */}
+      {page === "login" && (
+        <Login onNavigate={navigate} />
       )}
     </div>
   );

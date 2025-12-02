@@ -12,26 +12,13 @@ export default function StudyGuide() {
   const [showOnlyIncomplete, setShowOnlyIncomplete] = useState(false);
   const [expandedId, setExpandedId] = useState(null);
 
-  // 1️⃣ Load topics (correct backend route)
-useEffect(() => {
-  setTopics(topicsData);
-  setLoading(false);
-}, []);
-
-  // 2️⃣ Load saved progress (OPTIONAL backend route — if implemented later)
-  // Commented out for now because your backend does not have /api/studyguide/progress
-  /*
+  // Load topics
   useEffect(() => {
-    fetch(`${API_BASE}/api/studyguide/progress`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCompleted(data.completedTopics || []);
-      })
-      .catch(() => {});
+    setTopics(topicsData);
+    setLoading(false);
   }, []);
-  */
 
-  // 3️⃣ Save progress
+  // Save progress
   async function saveProgress(updated) {
     setCompleted(updated);
 
@@ -52,14 +39,14 @@ useEffect(() => {
     saveProgress(updated);
   }
 
-  // Tags
+  // Build tag list
   const allTags = useMemo(() => {
     const s = new Set();
     topics.forEach((t) => t.tags.forEach((tag) => s.add(tag)));
     return ["All", ...Array.from(s)];
   }, [topics]);
 
-  // Filter + Search
+  // Filters
   const filtered = useMemo(() => {
     return topics.filter((t) => {
       if (selectedTag !== "All" && !t.tags.includes(selectedTag)) return false;
@@ -67,7 +54,6 @@ useEffect(() => {
       if (!query) return true;
 
       const q = query.toLowerCase();
-
       return (
         t.title.toLowerCase().includes(q) ||
         t.summary.toLowerCase().includes(q) ||
@@ -83,14 +69,36 @@ useEffect(() => {
   if (loading)
     return <p className="text-center mt-10 text-gray-600">Loading topics…</p>;
 
+  // Emotes for each lesson (15 total)
+  const emojiSet = [
+    "🚦", "🚗", "📏", "🛣️", "⚠️",
+    "🚧", "🚘", "🕒", "🌧️", "🌙",
+    "🔧", "🚨", "🚌", "📚", "🛑"
+  ];
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-6">
-      <h1 className="text-3xl font-bold mb-6 text-[#1A1A1A]">Study Guide</h1>
+    <div className="max-w-4xl mx-auto px-4 py-10">
+
+      {/* Header */}
+      <h1 className="text-3xl font-bold mb-8 text-center">Study Guide</h1>
+
+      {/* Progress bar */}
+      <div className="mb-8">
+        <div className="h-3 w-full bg-gray-200 rounded-full">
+          <div
+            className="h-3 bg-blue-600 rounded-full transition-all"
+            style={{ width: `${progress}%` }}
+          ></div>
+        </div>
+        <p className="text-sm mt-1 text-gray-600">
+          {completed.length} / {topics.length} complete ({progress}%)
+        </p>
+      </div>
 
       {/* Filters */}
-      <div className="flex flex-wrap gap-4 mb-6">
+      <div className="flex flex-wrap gap-4 mb-8">
         <input
-          placeholder="Search topics..."
+          placeholder="Search lessons..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="border border-gray-300 rounded-lg px-3 py-2 w-60"
@@ -116,67 +124,78 @@ useEffect(() => {
         </label>
       </div>
 
-      {/* Progress Bar */}
-      <div className="mb-6">
-        <div className="h-3 w-full bg-gray-200 rounded-full">
-          <div
-            className="h-3 bg-[#1f6feb] rounded-full transition-all"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <p className="text-sm text-gray-600 mt-1">
-          {completed.length} / {topics.length} complete ({progress}%)
-        </p>
-      </div>
+      {/* Lessons list */}
+      <div className="space-y-6">
+        {filtered.map((t, index) => {
+          const isCompleted = completed.includes(t.id);
+          const isExpanded = expandedId === t.id;
 
-      {/* Topic Cards */}
-      <div className="space-y-4">
-        {filtered.map((t) => (
-          <div
-            key={t.id}
-            className="border border-gray-200 rounded-xl p-4 shadow-sm bg-white"
-          >
-            <div className="flex justify-between items-start">
-              <div>
-                <h2 className="text-xl font-semibold">{t.title}</h2>
-                <p className="text-sm text-gray-600 mt-1">{t.summary}</p>
-              </div>
-
-              <button
-                onClick={() => toggleComplete(t.id)}
-                className={`px-3 py-1 rounded-lg text-white text-sm ${
-                  completed.includes(t.id)
-                    ? "bg-green-600"
-                    : "bg-blue-600 hover:bg-blue-700"
-                }`}
-              >
-                {completed.includes(t.id) ? "Completed" : "Mark complete"}
-              </button>
-            </div>
-
-            {/* Details */}
-            <button
-              onClick={() =>
-                setExpandedId(expandedId === t.id ? null : t.id)
-              }
-              className="text-blue-600 text-sm mt-3"
+          return (
+            <div
+              key={t.id}
+              className="bg-white border rounded-xl shadow p-6 hover:shadow-lg transition"
             >
-              {expandedId === t.id ? "Hide details ↑" : "Show details ↓"}
-            </button>
+              <div className="flex justify-between items-start">
+                {/* Icon + Title */}
+                <div className="flex items-start gap-4 flex-1">
+                  <div className="text-4xl mt-1">
+                    {emojiSet[index % emojiSet.length]}
+                  </div>
 
-            {expandedId === t.id && (
-              <div className="mt-3 text-gray-700">
-                <p>{t.content}</p>
-                <p className="mt-2 text-sm">
-                  <strong>Tags:</strong> {t.tags.join(", ")}
-                </p>
-                <p className="text-sm">
-                  <strong>Estimated Time:</strong> {t.estimatedMins} mins
-                </p>
+                  <div>
+                    <h2 className="text-xl font-semibold">{t.title}</h2>
+                    <p className="text-sm text-gray-600 mt-1">{t.summary}</p>
+
+                    {/* Tags row */}
+                    <div className="flex gap-2 mt-3 flex-wrap">
+
+                      {/* NEW — LESSON BADGE */}
+                      <span className="px-3 py-1 text-xs bg-blue-100 text-blue-700 rounded-md font-medium">
+                        Lesson {index + 1}
+                      </span>
+
+                      <span className="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-md">
+                        ⏱ {t.estimatedMins} mins
+                      </span>
+
+                      <span className="px-3 py-1 text-xs bg-gray-100 text-gray-700 rounded-md">
+                        🏷 {t.tags.join(", ")}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Complete button */}
+                <button
+                  onClick={() => toggleComplete(t.id)}
+className={`px-4 py-2 rounded-lg text-sm font-medium ${
+  isCompleted
+    ? "bg-blue-600 text-white hover:bg-green-700"
+    : "bg-purple-600 text-white hover:bg-purple-700"
+}`}
+
+                >
+                  {isCompleted ? "Completed" : "Mark Complete"}
+                </button>
               </div>
-            )}
-          </div>
-        ))}
+
+              {/* Expand section */}
+<button
+  className="mt-4 inline-flex items-center px-4 py-2 rounded-lg bg-[#1f6feb] text-white text-sm font-medium shadow-sm hover:bg-[#1557c0] transition"
+  onClick={() => setExpandedId(isExpanded ? null : t.id)}
+>
+  Start Lesson →
+</button>
+
+
+              {isExpanded && (
+                <div className="border-l-2 border-blue-500 pl-4 mt-3 text-gray-700">
+                  <p className="text-sm leading-relaxed">{t.content}</p>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
